@@ -40,41 +40,44 @@
                     <form action="" class="form-group">
                         <div class="mt-3 row">
                             <div class="col-md-6 d-flex mt-3">
-                                <label for="" class="fw-bolder col-sm-6 mt-1">Hostel ID</label>
+                                <label for="" class="fw-bolder col-sm-6 mt-1">Select Hostel ID</label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="" id="" class="form-control w-75">
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-flex mt-3">
-                                <label for="" class="fw-bolder col-sm-6 mt-1">Financial Year</label>
-                                <div class="col-sm-4">
-                                    <select name="" id="" class="form-control w-75" disabled>
-                                        <option value="1" selected>2021-2022</option>
+                                    <select name="" class="form-control w-75">
+                                        <option value="" selected> Hostel ID</option>
+                                        <option value="1">DoSJE14</option>
+                                        <option value="2">DoSJE15</option>
+                                        <option value="3">Dosje16</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex mt-3">
+                                <label for="" class="fw-bolder col-sm-6 mt-1">Financial Year</label>
+                                <div class="col-sm-4" id="fin">
+                                    <!-- <input type="text" class="form-control w-75" id="fin" readonly> -->
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-6 d-flex mt-3">
                                 <label for="" class="fw-bolder col-sm-6 mt-1">Hostel Progress</label>
                                 <div class="col-sm-4">
                                     <input type="text" name="" id="" class="form-control w-75" disabled>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-6 d-flex mt-3">
                                 <label for="" class="fw-bolder col-sm-6 mt-1">No. of Inmates</label>
-                                <div class="col-sm-4">
-                                    <input type="text" name="" id="a1" class="form-control w-75">
+                                <div class="col-sm-4 a1" id="inmates">
+                                    <!-- <input type="text" name="" id="a1" class="form-control w-75"> -->
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex mt-3">
-                                <label for="" class="fw-bolder col-sm-6 mt-1">One Time Grant Per Inmates (in RS.)</label>
+                                <label for="" class="fw-bolder col-sm-6 mt-1">One Time Grant Per Inmate (in RS.)</label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="" id="a2" class="form-control w-75" value="5000" readonly>
+                                    <input type="text" name="" class="form-control w-75 a2" value="5000" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex mt-3">
                                 <label for="" class="fw-bolder col-sm-6 mt-1">Total One Time Grant</label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="" id="a3" class="form-control w-75" value="" readonly>
+                                    <input type="text" name="" class="form-control w-75 " id="a3" value="" readonly>
                                 </div>
                             </div>
                             <div class="col-md-12 mt-3">
@@ -96,12 +99,13 @@
                             <div class="col-md-6 d-flex mt-3">
                                 <label for="" class="fw-bolder col-sm-6">U.C. Date</label>
                                 <div class="col-sm-4">
-                                    <input name="exp_sdate" id="exp_sdate" type="text" class="datepicker-3 form-control hasDatepicker" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" onkeydown="return false" required="" data-bv-field="exp_sdate">
+                                    <input name="exp_sdate" id="exp_sdate" type="text" class="datepicker-3 form-control hasDatepicker w-75" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" onkeydown="return false" required="" data-bv-field="exp_sdate">
                                 </div>
                             </div>
                             <div class="m-3 w-50">
-                                <button type="submit" class="btn btn-success float-end">Save</button>
+                                <button type="submit" class="btn btn-success float-end" id="btn">Save</button>
                             </div>
+                            <div id="output"></div>
                         </div>
                     </form>                      
                 </div>
@@ -110,11 +114,21 @@
            <!-- </div> -->
         </div>
         <script>
-                $('#a1, #a2').keyup(function(){
-                var price = parseFloat($('#a1').val());
-                var qty = parseFloat($('#a2').val());
-                $('#a3').val(price * qty );
+                $('.a1, .a2').keyup(function(){
+                var a1 = parseFloat($('.a1').val());
+                var a2 = parseFloat($('.a2').val());
+                $('#a3').val(a1 * a2 );
                 });
+                $(document).ready(function () {
+			    $("select").change(function (event) {
+				$.getJSON("hostel.json", function (hostel) {
+					// $("#output").html("<p> Hostel ID: "
+					// 	+ hostel.hostelId + "</p>");
+					$("#fin").append("<p>"+ hostel.financialYear + "</p>");
+					$("#inmates").append("<p>"+ hostel.noofInmates + "</p>");
+				});
+			});
+		});
         </script>
 </body>
 </html>
