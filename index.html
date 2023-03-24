@@ -39,20 +39,20 @@
                  <div class="">
                     <form action="" class="form-group">
                         <div class="mt-3 row">
-                            <div class="col-md-6 d-flex mt-3">
+                            <div class="col-md-6 col-sm-6 d-flex mt-3">
                                 <label for="" class="fw-bolder col-sm-6 mt-1">Select Hostel ID</label>
-                                <div class="col-sm-4">
-                                    <select name="" class="form-control w-75">
-                                        <option value="" selected> Hostel ID</option>
+                                <div class="col-sm-4 col-md-4">
+                                    <select name="" class="form-control w-75" id="select1">
+                                        <option value=""> Hostel ID</option>
                                         <option value="1">DoSJE14</option>
                                         <option value="2">DoSJE15</option>
                                         <option value="3">Dosje16</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6 d-flex mt-3">
+                            <div class="col-md-6 col-sm-6 d-flex mt-3">
                                 <label for="" class="fw-bolder col-sm-6 mt-1">Financial Year</label>
-                                <div class="col-sm-4" id="fin">
+                                <div class="col-sm-4 datablank border form-control w-25" id="fin">
                                     <!-- <input type="text" class="form-control w-75" id="fin" readonly> -->
                                 </div>
                             </div>
@@ -64,14 +64,14 @@
                             </div> -->
                             <div class="col-md-6 d-flex mt-3">
                                 <label for="" class="fw-bolder col-sm-6 mt-1">No. of Inmates</label>
-                                <div class="col-sm-4 a1" id="inmates">
-                                    <!-- <input type="text" name="" id="a1" class="form-control w-75"> -->
+                                <div class="col-sm-4 datablank border w-25 form-control" id="inmates">
+                                    <!-- <input type="text" name="" id="inmates" class="form-control w-75 datablank" readonly> -->
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex mt-3">
                                 <label for="" class="fw-bolder col-sm-6 mt-1">One Time Grant Per Inmate (in RS.)</label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="" class="form-control w-75 a2" value="5000" readonly>
+                                    <input type="text" name="" class="form-control w-75" id="a2" value="5000" readonly>
                                 </div>
                             </div>
                             <div class="col-md-6 d-flex mt-3">
@@ -114,21 +114,28 @@
            <!-- </div> -->
         </div>
         <script>
-                $('.a1, .a2').keyup(function(){
-                var a1 = parseFloat($('.a1').val());
-                var a2 = parseFloat($('.a2').val());
-                $('#a3').val(a1 * a2 );
-                });
-                $(document).ready(function () {
+                // $('#inmates, #a2').keyup(function(){
+                // var a1 = parseFloat($('#inmates').val());
+                // var a2 = parseFloat($('#a2').val());
+                // $('#a3').val(inmates * a2 );
+                // });
+                $(document).ready(function () { 
 			    $("select").change(function (event) {
+                   $(".datablank").html('');
+                   $("#a3").val('');
+                 var hid = $('#select1').val();
+                 if(hid!='') {
+                    var a2 = parseFloat($('#a2').val());
+                    
 				$.getJSON("hostel.json", function (hostel) {
-					// $("#output").html("<p> Hostel ID: "
-					// 	+ hostel.hostelId + "</p>");
-					$("#fin").append("<p>"+ hostel.financialYear + "</p>");
-					$("#inmates").append("<p>"+ hostel.noofInmates + "</p>");
-				});
+					$("#fin").html( hostel.financialYear  );
+					$("#inmates").html( hostel.noofInmates );
+                    $('#a3').val(hostel.noofInmates * a2 );
+                    });
+                }
+				// });
 			});
-		});
+		    });
         </script>
 </body>
 </html>
